@@ -15,7 +15,7 @@ class Calculator extends Component {
       <View style={styles.container}>
         <OutputScreen
           style={styles.outputScreen}
-          value={42} />
+          value={8} />
         <History style={styles.history} />
         <Inputs style={{flex: 1}} />
       </View>

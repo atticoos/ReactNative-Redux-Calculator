@@ -83,8 +83,17 @@ class Inputs extends Component {
   }
   renderActionRow() {
     return (
-      <View style={styles.row}>
-
+      <View style={[styles.row, styles.actionRow]}>
+        <TouchableHighlight
+          style={[styles.actionButton, styles.actionButtonUndo]}
+          underlayColor='#ebc6c8'>
+          <Text style={[styles.actionButtonText, styles.actionButtonUndoText]}>&lt; &lt;</Text>
+        </TouchableHighlight>
+        <TouchableHighlight
+          style={[styles.actionButton, styles.actionButtonEquals]}
+          unerlayColor='#bfe4be'>
+          <Text style={[styles.actionButtonText, styles.actionButtonEqualsText]}>=</Text>
+        </TouchableHighlight>
       </View>
     )
   }
@@ -111,9 +120,11 @@ const styles = StyleSheet.create({
     fontSize: 18
   },
   operationRow: {
+    flex: 1,
     paddingTop: 10,
     paddingBottom: 10,
-    justifyContent: 'space-around'
+    justifyContent: 'space-around',
+    alignItems: 'center'
   },
   operationInput: {
     justifyContent: 'center',
@@ -124,6 +135,32 @@ const styles = StyleSheet.create({
   },
   operationInputText: {
     color: '#fff'
+  },
+  actionRow: {
+    flex: 1,
+    justifyContent: 'space-around',
+    paddingTop: 10,
+    paddingBottom: 10,
+    paddingLeft: 20,
+    paddingRight: 20
+  },
+  actionButton: {
+    flex: 1,
+    borderWidth: 1,
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  actionButtonText: {
+    fontSize: 24
+  },
+  actionButtonUndo: {
+    marginRight: 10,
+    borderColor: '#ebc6c8'
+  },
+  actionButtonEquals: {
+    marginLeft: 10,
+    borderColor: '#bfe4be'
   }
 });
 
