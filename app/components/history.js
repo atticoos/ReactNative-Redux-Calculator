@@ -2,12 +2,11 @@
 
 import React, {Component, StyleSheet, View, Text, TextInput} from 'react-native';
 
-class OutputScreen extends Component {
+class History extends Component {
   render() {
-    var value = this.props.value;
     return (
       <View style={[styles.view, this.props.style]}>
-        <Text style={styles.text}>{value}</Text>
+        <Text style={styles.text}>10 - 2</Text>
       </View>
     )
   }
@@ -19,8 +18,8 @@ const styles = StyleSheet.create({
   },
   text: {
     color: '#fff',
-    fontSize: 38
+    fontSize: 22
   }
 })
 
-export default OutputScreen;
+export default History;
