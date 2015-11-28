@@ -1,6 +1,6 @@
 'use strict';
 
-import React, {Component, StyleSheet, View, Text, TextInput} from 'react-native';
+import React, {Component, StyleSheet, View, Text} from 'react-native';
 
 class History extends Component {
   render() {

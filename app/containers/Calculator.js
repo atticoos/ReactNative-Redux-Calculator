@@ -4,6 +4,7 @@ import React, {Component, StyleSheet, View, Text} from 'react-native';
 import {connect} from 'react-redux/native';
 import OutputScreen from '../components/outputScreen';
 import History from '../components/history';
+import Inputs from '../components/inputs';
 
 @connect(state => ({
   calculations: state.calculations
@@ -16,7 +17,7 @@ class Calculator extends Component {
           style={styles.outputScreen}
           value={42} />
         <History style={styles.history} />
-        <Text>Hello world</Text>
+        <Inputs style={{flex: 1}} />
       </View>
     );
   }
