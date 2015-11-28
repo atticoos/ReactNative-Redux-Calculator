@@ -20,7 +20,13 @@ var inputs = [
   {value: '+/-', type: Types.MODIFIER},
   {value: 0, type: Types.NUMBER},
   {value: '.', type: Types.MODIFIER},
-]
+];
+var operations = [
+  {value: '/', color: '#c77ccc', altColor: '#b16eb7'},
+  {value: '-', color: '#f8b055', altColor: '#dc9c4c'},
+  {value: '+', color: '#f796d2', altColor: '#e088be'},
+  {value: 'x', color: '#6fcdf4', altColor: '#65badd'}
+];
 
 class Inputs extends Component {
   render() {
@@ -28,6 +34,8 @@ class Inputs extends Component {
     return (
       <View style={this.props.style}>
         {this.renderInputRows()}
+        {this.renderOperationRow()}
+        {this.renderActionRow()}
       </View>
     )
   }
@@ -41,18 +49,44 @@ class Inputs extends Component {
     }, [[]]).map((group, rowIndex) => {
       var columns = group.map((item, columnIndex) => {
         return (
-          <TouchableHighlight style={styles.input} key={'inputRow_' + rowIndex + '_inputCol_' + columnIndex}>
+          <TouchableHighlight
+            key={'inputRow_' + rowIndex + '_inputCol_' + columnIndex}
+            style={styles.input}
+            underlayColor="#ededed">
             <Text style={styles.inputText}>{item.value}</Text>
           </TouchableHighlight>
         );
       });
-      console.log('columns', columns);
       return (
-        <View style={styles.row} key={'inputRow_' + rowIndex}>
+        <View style={[styles.row, styles.inputRow]} key={'inputRow_' + rowIndex}>
           {columns}
         </View>
       );
     });
+  }
+  renderOperationRow() {
+    var columns = operations.map((operation, index) => {
+      return (
+        <TouchableHighlight
+          key={'operationRow' + index}
+          style={[styles.operationInput, {backgroundColor: operation.color}]}
+          underlayColor={operation.altColor}>
+          <Text style={styles.operationInputText}>{operation.value}</Text>
+        </TouchableHighlight>
+      );
+    });
+    return (
+      <View style={[styles.row, styles.operationRow]}>
+        {columns}
+      </View>
+    );
+  }
+  renderActionRow() {
+    return (
+      <View style={styles.row}>
+
+      </View>
+    )
   }
 }
 
@@ -61,14 +95,35 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flex: 1
   },
+  inputRow: {
+    borderBottomWidth: 1,
+    borderBottomColor: '#ededed'
+  },
   input: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    borderRightWidth: 1,
+    borderRightColor: '#ededed'
   },
   text: {
     color: '#000',
     fontSize: 18
+  },
+  operationRow: {
+    paddingTop: 10,
+    paddingBottom: 10,
+    justifyContent: 'space-around'
+  },
+  operationInput: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 25,
+    width: 50,
+    height: 50
+  },
+  operationInputText: {
+    color: '#fff'
   }
 });
 
