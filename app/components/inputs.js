@@ -1,6 +1,7 @@
 'use strict';
 
 import React, {TouchableHighlight, Component, StyleSheet, View, Text} from 'react-native';
+import {OPERATION_ADD, OPERATION_SUBTRACT, OPERATION_DIVIDE, OPERATION_MULTIPLY} from '../actions/types';
 
 var Types = {
   NUMBER: 'NUMBER',
@@ -22,10 +23,10 @@ var inputs = [
   {value: '.', type: Types.MODIFIER},
 ];
 var operations = [
-  {value: '/', color: '#c77ccc', altColor: '#b16eb7'},
-  {value: '-', color: '#f8b055', altColor: '#dc9c4c'},
-  {value: '+', color: '#f796d2', altColor: '#e088be'},
-  {value: 'x', color: '#6fcdf4', altColor: '#65badd'}
+  {value: '/', color: '#c77ccc', altColor: '#b16eb7', operation: OPERATION_DIVIDE},
+  {value: '-', color: '#f8b055', altColor: '#dc9c4c', operation: OPERATION_SUBTRACT},
+  {value: '+', color: '#f796d2', altColor: '#e088be', operation: OPERATION_ADD},
+  {value: 'x', color: '#6fcdf4', altColor: '#65badd', operation: OPERATION_MULTIPLY}
 ];
 
 class Inputs extends Component {
@@ -66,12 +67,14 @@ class Inputs extends Component {
     });
   }
   renderOperationRow() {
+    var {performOperation} = this.props;
     var columns = operations.map((operation, index) => {
       return (
         <TouchableHighlight
           key={'operationRow' + index}
           style={[styles.operationInput, {backgroundColor: operation.color}]}
-          underlayColor={operation.altColor}>
+          underlayColor={operation.altColor}
+          onPress={() => performOperation(operation.operation)}>
           <Text style={styles.operationInputText}>{operation.value}</Text>
         </TouchableHighlight>
       );

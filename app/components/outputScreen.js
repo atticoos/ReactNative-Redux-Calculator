@@ -1,19 +1,20 @@
 'use strict';
 
 import React, {Component, StyleSheet, View, Text} from 'react-native';
+import {OPERATION_ADD, OPERATION_SUBTRACT, OPERATION_DIVIDE, OPERATION_MULTIPLY} from '../actions/types';
 
 class OutputScreen extends Component {
   getCalculation() {
     var {history} = this.props.calculations;
     return history.splice(1, history.length).reduce((aggregation, current) => {
       switch (current.operation) {
-        case 'add':
+        case OPERATION_ADD:
           return aggregation + current.input;
-        case 'subtract':
+        case OPERATION_SUBTRACT:
           return aggregation - current.input;
-        case 'divide':
+        case OPERATION_DIVIDE:
           return aggregation / current.input;
-        case 'multiply':
+        case OPERATION_MULTIPLY:
           return aggregation * current.input;
         default:
           return aggregation;

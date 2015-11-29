@@ -16,7 +16,6 @@ const integerSigns = {
 
 const initialState = {
   positive: true,
-  lastOperation: null,
   currentInput: [],
   history: [{
     input: 10,
@@ -29,6 +28,7 @@ const initialState = {
 
 export default function calculationReducer (state = initialState, action) {
   var currentInput = state.currentInput.slice();
+  var history = state.history.slice();
   switch(action.type) {
     case NUMBER_INPUT:
       currentInput.push(action.value);
@@ -54,9 +54,15 @@ export default function calculationReducer (state = initialState, action) {
     case OPERATION_INPUT:
       // calculate current input against value of last history item, then reset the integer sign
       // set currentInput to the calculated value
+      history.push({
+        input: parseFloat(currentInput.join('')),
+        operation: action.operation
+      });
+      currentInput = []
       return {
         ...state,
-        lastOperation: action.operation,
+        history,
+        currentInput,
         positive: true
       };
     case UNDO:
