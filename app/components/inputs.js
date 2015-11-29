@@ -86,16 +86,19 @@ class Inputs extends Component {
     );
   }
   renderActionRow() {
+    var {calculate, undo} = this.props;
     return (
       <View style={[styles.row, styles.actionRow]}>
         <TouchableHighlight
           style={[styles.actionButton, styles.actionButtonUndo]}
-          underlayColor='#ebc6c8'>
+          underlayColor='#ebc6c8'
+          onPress={undo}>
           <Text style={[styles.actionButtonText, styles.actionButtonUndoText]}>&lt; &lt;</Text>
         </TouchableHighlight>
         <TouchableHighlight
           style={[styles.actionButton, styles.actionButtonEquals]}
-          unerlayColor='#bfe4be'>
+          unerlayColor='#bfe4be'
+          onPress={calculate}>
           <Text style={[styles.actionButtonText, styles.actionButtonEqualsText]}>=</Text>
         </TouchableHighlight>
       </View>
