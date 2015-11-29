@@ -6,7 +6,7 @@ import {OPERATION_ADD, OPERATION_SUBTRACT, OPERATION_DIVIDE, OPERATION_MULTIPLY}
 class OutputScreen extends Component {
   getCalculation() {
     var {history} = this.props.calculations;
-    return history.splice(1, history.length).reduce((aggregation, current) => {
+    return history.slice(1, history.length).reduce((aggregation, current) => {
       switch (current.operation) {
         case OPERATION_ADD:
           return aggregation + current.input;

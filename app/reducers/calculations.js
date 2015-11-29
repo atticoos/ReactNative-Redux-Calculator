@@ -19,10 +19,10 @@ const initialState = {
   currentInput: [],
   history: [{
     input: 10,
-    operation: 'add'
+    operation: 'ADD'
   }, {
     input: 10,
-    operation: 'add'
+    operation: 'ADD'
   }]
 };
 
