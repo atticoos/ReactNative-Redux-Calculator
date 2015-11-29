@@ -5,7 +5,8 @@ import {OPERATION_ADD, OPERATION_SUBTRACT, OPERATION_DIVIDE, OPERATION_MULTIPLY}
 
 var Types = {
   NUMBER: 'NUMBER',
-  MODIFIER: 'MODIFIER'
+  DECIMAL: 'DECIMAL',
+  SIGN: 'SIGN'
 };
 
 var inputs = [
@@ -18,9 +19,9 @@ var inputs = [
   {value: 7, type: Types.NUMBER},
   {value: 8, type: Types.NUMBER},
   {value: 9, type: Types.NUMBER},
-  {value: '+/-', type: Types.MODIFIER},
+  {value: '+/-', type: Types.SIGN},
   {value: 0, type: Types.NUMBER},
-  {value: '.', type: Types.MODIFIER},
+  {value: '.', type: Types.DECIMAL},
 ];
 var operations = [
   {value: '/', color: '#c77ccc', altColor: '#b16eb7', operation: OPERATION_DIVIDE},
@@ -40,7 +41,7 @@ class Inputs extends Component {
     )
   }
   renderInputRows() {
-    var {inputNumber} = this.props;
+    var {inputNumber, inputSigned, inputDecimal} = this.props;
     return inputs.reduce((collection, input) => {
       if (collection[collection.length - 1].length === 3) {
         collection.push([]);
@@ -54,7 +55,15 @@ class Inputs extends Component {
             key={'inputRow_' + rowIndex + '_inputCol_' + columnIndex}
             underlayColor="#ededed"
             style={styles.input}
-            onPress={() => inputNumber(item.value)}>
+            onPress={() => {
+              if (item.type === Types.NUMBER) {
+                inputNumber(item.value);
+              } else if (item.type === Types.DECIMAL) {
+                inputDecimal();
+              } else if (item.type === Types.SIGN) {
+                inputSigned();
+              }
+            }}>
             <Text style={styles.inputText}>{item.value}</Text>
           </TouchableHighlight>
         );

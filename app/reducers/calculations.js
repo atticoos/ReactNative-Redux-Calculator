@@ -11,15 +11,9 @@ import {
 } from '../actions/types';
 import {aggregateCalculatorHistory} from '../helper';
 
-const integerSigns = {
-  POSITIVE: 'POSTIIVE',
-  NEGATIVE: 'NEGATIVE'
-};
-
 const initialState = {
-  positive: true,
   offset: null,
-  operation: null,
+  operation: 'MULTIPLY',
   currentInput: [],
   history: [{
     input: 5,
@@ -59,9 +53,14 @@ export default function calculationReducer (state = initialState, action) {
         currentInput
       };
     case NUMBER_SIGNED_INPUT:
+      if (currentInput[0] === '-') {
+        currentInput.splice(0, 1);
+      } else {
+        currentInput.unshift('-');
+      }
       return {
         ...state,
-        positive: !state.positive
+        currentInput
       };
     case DECIMAL_INPUT:
       // only allow one decimal
@@ -109,11 +108,9 @@ export default function calculationReducer (state = initialState, action) {
       };
     case UNDO:
       var lastInput = history.pop();
-      var positive = true;
       currentInput = [];
       return {
         ...state,
-        positive,
         currentInput,
         history
       };
