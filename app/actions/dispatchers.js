@@ -5,6 +5,7 @@ import {
   NUMBER_SIGNED_INPUT,
   DECIMAL_INPUT,
   OPERATION_INPUT,
+  TIME_TRAVEL,
   UNDO,
   CALCULATE
 } from './types';
@@ -44,5 +45,12 @@ export function undo() {
 export function calculate() {
   return {
     type: CALCULATE
+  };
+}
+
+export function timeTravel(index) {
+  return {
+    type: TIME_TRAVEL,
+    index
   };
 }

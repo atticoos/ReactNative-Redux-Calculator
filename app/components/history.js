@@ -1,6 +1,6 @@
 'use strict';
 
-import React, {Component, StyleSheet, ScrollView, View, Text} from 'react-native';
+import React, {Component, StyleSheet, ScrollView, TouchableHighlight, View, Text} from 'react-native';
 import {OPERATION_ADD, OPERATION_SUBTRACT, OPERATION_DIVIDE, OPERATION_MULTIPLY} from '../actions/types';
 import {aggregateCalculatorHistory} from '../helper';
 
@@ -25,19 +25,24 @@ class History extends Component {
     )
   }
   renderPills() {
-    var {calculations} = this.props;
+    var {history, offset} = this.props.calculations;
     var pills = [];
 
-    aggregateCalculatorHistory(calculations, (aggregate, input, operation) => {
-      pills.push(this.createPill(aggregate, input, operation));
+    aggregateCalculatorHistory(history, null, (aggregate, input, operation, index) => {
+      pills.push(this.createPill(aggregate, input, operation, index));
     });
     return pills.reverse();
   }
-  createPill(aggregation, input, operation) {
+  createPill(aggregation, input, operation, index) {
+    var {timeTravel, calculations} = this.props;
+    var offset = calculations.offset;
+    var offsetStyle = offset === null || index <= offset ? null : styles.pillOffset;
     return (
-      <View style={[styles.pill, styles[operation], styles.inversion]}>
+      <TouchableHighlight
+        onPress={() => timeTravel(index)}
+        style={[styles.pill, styles[operation], styles.inversion, offsetStyle]}>
         <Text style={styles.text}>{aggregation} {OperationSymbols[operation]} {input}</Text>
-      </View>
+      </TouchableHighlight>
     );
   }
 }
@@ -61,6 +66,9 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     borderRadius: 15,
     marginRight: 20
+  },
+  pillOffset: {
+    backgroundColor: 'gray'
   },
   text: {
     color: '#fff',

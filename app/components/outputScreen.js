@@ -23,9 +23,9 @@ class OutputScreen extends Component {
     }
   }
   renderAggregate() {
-    var {currentInput, history, operation} = this.props.calculations;
+    var {currentInput, history, operation, offset} = this.props.calculations;
     if (history.length > 0) {
-      let aggregate = aggregateCalculatorHistory(history);
+      let aggregate = aggregateCalculatorHistory(history, offset);
       let highlight = null;
       if (currentInput.length === 0) {
         highlight = styles.highlightAggregate;

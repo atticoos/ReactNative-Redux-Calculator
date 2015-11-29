@@ -21,7 +21,8 @@ class Calculator extends Component {
           style={styles.outputScreen}
           calculations={calculations} />
         <History
-          calculations={calculations.history}
+          {...boundActionCreators}
+          calculations={calculations}
           style={styles.history} />
         <Inputs
           {...boundActionCreators}
