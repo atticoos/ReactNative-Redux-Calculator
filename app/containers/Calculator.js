@@ -37,7 +37,6 @@ const styles = StyleSheet.create({
     flex: 1
   },
   outputScreen: {
-    backgroundColor: '#6fccf5',
     paddingBottom: 20,
     paddingLeft: 20,
     paddingRight: 20,

@@ -3,13 +3,8 @@
 import React, {Component, StyleSheet, ScrollView, TouchableHighlight, View, Text} from 'react-native';
 import {OPERATION_ADD, OPERATION_SUBTRACT, OPERATION_DIVIDE, OPERATION_MULTIPLY} from '../actions/types';
 import {aggregateCalculatorHistory} from '../helper';
-
-const OperationSymbols = {
-  [OPERATION_ADD]: '+',
-  [OPERATION_SUBTRACT]: '-',
-  [OPERATION_DIVIDE]: '/',
-  [OPERATION_MULTIPLY]: 'X'
-};
+import OperationSymbols from '../constants/operationSymbols';
+import Colors from '../colors';
 
 class History extends Component {
   render() {
@@ -42,13 +37,14 @@ class History extends Component {
     } else if (index > offset) {
       offsetStyle = styles.pillOffset;
     } else if (index === offset) {
-      offsetStyle = styles.currentPillOffset;
+      offsetStyle = {backgroundColor: Colors[operation].darker};
     }
     return (
       <TouchableHighlight
+        underlayColor={Colors[operation].darker}
         onPress={() => timeTravel(index)}
         style={[styles.pill, styles[operation], styles.inversion, offsetStyle]}>
-        <Text style={styles.text}>{aggregation} {OperationSymbols[operation]} {input}</Text>
+        <Text style={[styles.text, offsetStyle]}>{aggregation} {OperationSymbols[operation]} {input}</Text>
       </TouchableHighlight>
     );
   }
@@ -75,7 +71,8 @@ const styles = StyleSheet.create({
     marginRight: 20
   },
   pillOffset: {
-    backgroundColor: 'gray'
+    backgroundColor: 'gray',
+    color: '#cdcdcd'
   },
   currentPillOffset: {
     backgroundColor: 'green'
@@ -85,16 +82,16 @@ const styles = StyleSheet.create({
     fontSize: 18
   },
   [OPERATION_ADD]: {
-    backgroundColor: '#f796d2'
+    backgroundColor: Colors[OPERATION_ADD].normal
   },
   [OPERATION_SUBTRACT]: {
-    backgroundColor: '#f8b055'
+    backgroundColor: Colors[OPERATION_SUBTRACT].normal
   },
   [OPERATION_DIVIDE]: {
-    backgroundColor: '#f8b055'
+    backgroundColor: Colors[OPERATION_DIVIDE].normal
   },
   [OPERATION_MULTIPLY]: {
-    backgroundColor: '#6fcdf4'
+    backgroundColor: Colors[OPERATION_MULTIPLY].normal
   }
 });
 
