@@ -22,9 +22,9 @@ class OutputScreen extends Component {
     if (history.length > 0) {
       let aggregate = aggregateCalculatorHistory(history, offset);
       let highlight = null;
-      if (offset !== null) {
-        highlight = highlightedStyles[history[offset + 1].operation];
-      } else if (currentInput.length === 0) {
+      if (offset !== null || currentInput.length === 0) {
+        highlight = styles.highlightAggregate;
+      } else {
         highlight = highlightedStyles[operation];
       }
       return (
