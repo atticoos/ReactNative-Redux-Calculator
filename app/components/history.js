@@ -1,7 +1,8 @@
 'use strict';
 
-import React, {Component, StyleSheet, View, Text} from 'react-native';
+import React, {Component, StyleSheet, ScrollView, View, Text} from 'react-native';
 import {OPERATION_ADD, OPERATION_SUBTRACT, OPERATION_DIVIDE, OPERATION_MULTIPLY} from '../actions/types';
+import {aggregateCalculatorHistory} from '../helper';
 
 const OperationSymbols = {
   [OPERATION_ADD]: '+',
@@ -13,8 +14,12 @@ const OperationSymbols = {
 class History extends Component {
   render() {
     return (
-      <View style={[styles.view, this.props.style]}>
-        {this.renderPills()}
+      <View style={[this.props.style]}>
+        <ScrollView
+          horizontal={true}
+          style={styles.inversion}>
+          {this.renderPills()}
+        </ScrollView>
       </View>
     )
   }
@@ -22,37 +27,30 @@ class History extends Component {
     var {calculations} = this.props;
     var pills = [];
 
-    calculations.slice(1, calculations.length).reduce((aggregate, current) => {
-      pills.push(this.createPill(aggregate, current.input, current.operation));
-      switch (current.operation) {
-        case OPERATION_ADD:
-          return aggregate + current.input;
-        case OPERATION_SUBTRACT:
-          return aggregate - current.input;
-        case OPERATION_DIVIDE:
-          return aggregate / current.input;
-        case OPERATION_MULTIPLY:
-          return aggregate * current.input;
-        default:
-          return aggregate;
-      }
-    }, calculations[0].input);
-    return pills;
+    aggregateCalculatorHistory(calculations, (aggregate, input, operation) => {
+      pills.push(this.createPill(aggregate, input, operation));
+    });
+    return pills.reverse();
   }
   createPill(aggregation, input, operation) {
     return (
-      <View style={[styles.pill, styles[operation]]}>
+      <View style={[styles.pill, styles[operation], styles.inversion]}>
         <Text style={styles.text}>{aggregation} {OperationSymbols[operation]} {input}</Text>
       </View>
-    )
+    );
   }
 }
 
 const styles = StyleSheet.create({
   view: {
-    alignItems: 'flex-end',
-    flexDirection: 'row',
-    justifyContent: 'flex-end'
+    // alignItems: 'flex-end',
+    // flexDirection: 'row',
+    // justifyContent: 'flex-end'
+  },
+  inversion: {
+    transform: [
+      {scaleX: -1}
+    ]
   },
   pill: {
     backgroundColor: '#f8b055',
