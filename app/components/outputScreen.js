@@ -2,14 +2,9 @@
 
 import React, {Component, StyleSheet, View, Text} from 'react-native';
 import {OPERATION_ADD, OPERATION_SUBTRACT, OPERATION_DIVIDE, OPERATION_MULTIPLY} from '../actions/types';
+import OperationSymbols from '../constants/operationSymbols';
+import Colors from '../colors';
 import {aggregateCalculatorHistory} from '../helper';
-
-const OperationSymbols = {
-  [OPERATION_ADD]: '+',
-  [OPERATION_SUBTRACT]: '-',
-  [OPERATION_DIVIDE]: '/',
-  [OPERATION_MULTIPLY]: 'X'
-};
 
 class OutputScreen extends Component {
   getOutput() {
@@ -23,12 +18,14 @@ class OutputScreen extends Component {
     }
   }
   renderAggregate() {
-    var {currentInput, history, operation} = this.props.calculations;
+    var {currentInput, history, operation, offset} = this.props.calculations;
     if (history.length > 0) {
-      let aggregate = aggregateCalculatorHistory(history);
+      let aggregate = aggregateCalculatorHistory(history, offset);
       let highlight = null;
-      if (currentInput.length === 0) {
-        highlight = styles.highlightAggregate;
+      if (offset !== null) {
+        highlight = highlightedStyles[history[offset + 1].operation];
+      } else if (currentInput.length === 0) {
+        highlight = highlightedStyles[operation];
       }
       return (
         <Text style={[styles.aggregate, highlight]}>{aggregate} {currentInput.length > 0 ? OperationSymbols[operation] : ''}</Text>
@@ -36,8 +33,13 @@ class OutputScreen extends Component {
     }
   }
   render() {
+    var {offset, history, operation} = this.props.calculations;
+    var offsetStyle = null;
+    if (offset !== null) {
+      offsetStyle = styles[history[offset + 1].operation];
+    }
     return (
-      <View style={[styles.view, this.props.style]}>
+      <View style={[styles.view, this.props.style, styles[operation], offsetStyle]}>
         {this.renderAggregate()}
         <Text style={styles.text}>{this.getOutput()}</Text>
       </View>
@@ -47,6 +49,7 @@ class OutputScreen extends Component {
 
 const styles = StyleSheet.create({
   view: {
+    backgroundColor: '#6fccf5',
     alignItems: 'center',
     justifyContent: 'flex-end',
     flexDirection: 'row'
@@ -62,7 +65,33 @@ const styles = StyleSheet.create({
   },
   highlightAggregate: {
     color: '#fff'
+  },
+  [OPERATION_ADD]: {
+    backgroundColor: Colors[OPERATION_ADD].normal
+  },
+  [OPERATION_SUBTRACT]: {
+    backgroundColor: Colors[OPERATION_SUBTRACT].normal
+  },
+  [OPERATION_DIVIDE]: {
+    backgroundColor: Colors[OPERATION_DIVIDE].normal
+  },
+  [OPERATION_MULTIPLY]: {
+    backgroundColor: Colors[OPERATION_MULTIPLY].normal
   }
 });
+const highlightedStyles = StyleSheet.create({
+  [OPERATION_ADD]: {
+    color: Colors[OPERATION_ADD].lighter
+  },
+  [OPERATION_SUBTRACT]: {
+    color: Colors[OPERATION_SUBTRACT].lighter
+  },
+  [OPERATION_DIVIDE]: {
+    color: Colors[OPERATION_DIVIDE].lighter
+  },
+  [OPERATION_MULTIPLY]: {
+    color: Colors[OPERATION_MULTIPLY].lighter
+  }
+})
 
 export default OutputScreen;

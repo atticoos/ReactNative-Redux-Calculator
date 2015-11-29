@@ -5,14 +5,15 @@ import {OPERATION_ADD, OPERATION_SUBTRACT, OPERATION_DIVIDE, OPERATION_MULTIPLY}
 /**
  * Aggregates the final value of the calculator by the history of inputs
  */
-export function aggregateCalculatorHistory (calculations, stepFunction = function(){}) {
-  if (calculations.length === 0) {
+export function aggregateCalculatorHistory (calculations, offset = null, stepFunction = function(){}) {
+  let collection = calculations.slice(0, offset === null ? calculations.length : (offset + 2));
+  if (collection.length === 0) {
     return 0;
-  } else if (calculations.length === 1) {
-    return calculations[0].input;
+  } else if (collection.length === 1) {
+    return collection[0].input;
   }
-  return calculations.slice(1, calculations.length).reduce((aggregate, current) => {
-    stepFunction(aggregate, current.input, current.operation);
+  return collection.slice(1, calculations.length).reduce((aggregate, current, index) => {
+    stepFunction(aggregate, current.input, current.operation, index);
     switch (current.operation) {
       case OPERATION_ADD:
         return aggregate + current.input;
@@ -25,5 +26,5 @@ export function aggregateCalculatorHistory (calculations, stepFunction = functio
       default:
         return aggregate;
     }
-  }, calculations[0].input);
+  }, collection[0].input);
 }

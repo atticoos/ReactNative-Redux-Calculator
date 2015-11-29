@@ -21,7 +21,8 @@ class Calculator extends Component {
           style={styles.outputScreen}
           calculations={calculations} />
         <History
-          calculations={calculations.history}
+          {...boundActionCreators}
+          calculations={calculations}
           style={styles.history} />
         <Inputs
           {...boundActionCreators}
@@ -36,7 +37,6 @@ const styles = StyleSheet.create({
     flex: 1
   },
   outputScreen: {
-    backgroundColor: '#6fccf5',
     paddingBottom: 20,
     paddingLeft: 20,
     paddingRight: 20,

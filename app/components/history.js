@@ -1,15 +1,10 @@
 'use strict';
 
-import React, {Component, StyleSheet, ScrollView, View, Text} from 'react-native';
+import React, {Component, StyleSheet, ScrollView, TouchableHighlight, View, Text} from 'react-native';
 import {OPERATION_ADD, OPERATION_SUBTRACT, OPERATION_DIVIDE, OPERATION_MULTIPLY} from '../actions/types';
 import {aggregateCalculatorHistory} from '../helper';
-
-const OperationSymbols = {
-  [OPERATION_ADD]: '+',
-  [OPERATION_SUBTRACT]: '-',
-  [OPERATION_DIVIDE]: '/',
-  [OPERATION_MULTIPLY]: 'X'
-};
+import OperationSymbols from '../constants/operationSymbols';
+import Colors from '../colors';
 
 class History extends Component {
   render() {
@@ -25,19 +20,32 @@ class History extends Component {
     )
   }
   renderPills() {
-    var {calculations} = this.props;
+    var {history, offset} = this.props.calculations;
     var pills = [];
 
-    aggregateCalculatorHistory(calculations, (aggregate, input, operation) => {
-      pills.push(this.createPill(aggregate, input, operation));
+    aggregateCalculatorHistory(history, null, (aggregate, input, operation, index) => {
+      pills.push(this.createPill(aggregate, input, operation, index));
     });
     return pills.reverse();
   }
-  createPill(aggregation, input, operation) {
+  createPill(aggregation, input, operation, index) {
+    var {timeTravel, calculations} = this.props;
+    var offset = calculations.offset;
+    var offsetStyle;
+    if (offset === null) {
+      offsetStyle = null;
+    } else if (index > offset) {
+      offsetStyle = styles.pillOffset;
+    } else if (index === offset) {
+      offsetStyle = {backgroundColor: Colors[operation].darker};
+    }
     return (
-      <View style={[styles.pill, styles[operation], styles.inversion]}>
-        <Text style={styles.text}>{aggregation} {OperationSymbols[operation]} {input}</Text>
-      </View>
+      <TouchableHighlight
+        underlayColor={Colors[operation].darker}
+        onPress={() => timeTravel(index)}
+        style={[styles.pill, styles[operation], styles.inversion, offsetStyle]}>
+        <Text style={[styles.text, offsetStyle]}>{aggregation} {OperationSymbols[operation]} {input}</Text>
+      </TouchableHighlight>
     );
   }
 }
@@ -62,21 +70,28 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     marginRight: 20
   },
+  pillOffset: {
+    backgroundColor: 'gray',
+    color: '#cdcdcd'
+  },
+  currentPillOffset: {
+    backgroundColor: 'green'
+  },
   text: {
     color: '#fff',
     fontSize: 18
   },
   [OPERATION_ADD]: {
-    backgroundColor: '#f796d2'
+    backgroundColor: Colors[OPERATION_ADD].normal
   },
   [OPERATION_SUBTRACT]: {
-    backgroundColor: '#f8b055'
+    backgroundColor: Colors[OPERATION_SUBTRACT].normal
   },
   [OPERATION_DIVIDE]: {
-    backgroundColor: '#f8b055'
+    backgroundColor: Colors[OPERATION_DIVIDE].normal
   },
   [OPERATION_MULTIPLY]: {
-    backgroundColor: '#6fcdf4'
+    backgroundColor: Colors[OPERATION_MULTIPLY].normal
   }
 });
 

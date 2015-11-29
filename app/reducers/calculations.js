@@ -5,6 +5,7 @@ import {
   NUMBER_SIGNED_INPUT,
   DECIMAL_INPUT,
   OPERATION_INPUT,
+  TIME_TRAVEL,
   UNDO,
   CALCULATE
 } from '../actions/types';
@@ -17,9 +18,34 @@ const integerSigns = {
 
 const initialState = {
   positive: true,
+  offset: null,
   operation: null,
   currentInput: [],
-  history: []
+  history: [{
+    input: 5,
+    operation: 'ADD'
+  }, {
+    input: 3,
+    operation: 'ADD'
+  }, {
+    input: 5,
+    operation: 'MULTIPLY'
+  }, {
+    input: 10,
+    operation: 'DIVIDE'
+  },{
+    input: 5,
+    operation: 'ADD'
+  }, {
+    input: 3,
+    operation: 'ADD'
+  }, {
+    input: 5,
+    operation: 'MULTIPLY'
+  }, {
+    input: 10,
+    operation: 'DIVIDE'
+  }]
 };
 
 export default function calculationReducer (state = initialState, action) {
@@ -91,6 +117,13 @@ export default function calculationReducer (state = initialState, action) {
         currentInput,
         history
       };
+    case TIME_TRAVEL:
+      return {
+        ...state,
+        // toggle the offset to the selected offset of, if already selected, remove it
+        offset: action.index === state.offset ? null : action.index
+
+      }
     default:
       return state;
   }

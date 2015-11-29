@@ -6,6 +6,7 @@ export const DECIMAL_INPUT = 'DECIMAL_INPUT';
 export const OPERATION_INPUT = 'OPERATION_INPUT';
 export const UNDO = 'UNDO';
 export const CALCULATE = 'CALCULATE';
+export const TIME_TRAVEL = 'TIME_TRAVEL';
 
 export const OPERATION_ADD = 'ADD';
 export const OPERATION_SUBTRACT = 'SUBTRACT';
