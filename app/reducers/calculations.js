@@ -8,6 +8,7 @@ import {
   UNDO,
   CALCULATE
 } from '../actions/types';
+import {aggregateCalculatorHistory} from '../helper';
 
 const integerSigns = {
   POSITIVE: 'POSTIIVE',
@@ -76,7 +77,7 @@ export default function calculationReducer (state = initialState, action) {
     case UNDO:
       var lastInput = history.pop();
       var positive = true;
-      currentInput = lastInput.input.toString().split('');
+      currentInput = aggregateCalculatorHistory(history).toString().split('');
       if (currentInput[0] === '-') {
         currentInput.splice(0, 1);
         positive = false;

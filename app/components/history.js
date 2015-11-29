@@ -16,6 +16,7 @@ class History extends Component {
     return (
       <View style={[this.props.style]}>
         <ScrollView
+          showsHorizontalScrollIndicator={false}
           horizontal={true}
           style={styles.inversion}>
           {this.renderPills()}
@@ -59,7 +60,7 @@ const styles = StyleSheet.create({
     paddingRight: 10,
     paddingBottom: 10,
     borderRadius: 15,
-    marginLeft: 20
+    marginRight: 20
   },
   text: {
     color: '#fff',
