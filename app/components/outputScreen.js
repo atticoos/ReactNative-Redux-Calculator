@@ -17,17 +17,21 @@ class OutputScreen extends Component {
     if (currentInput.length === 0 && history.length === 0) {
       return 0
     } else if (currentInput.length === 0) {
-      return aggregateCalculatorHistory(history);
+      return '';
     } else {
       return currentInput.join('');
     }
   }
   renderAggregate() {
     var {currentInput, history, operation} = this.props.calculations;
-    if (currentInput.length > 0) {
+    if (history.length > 0) {
       let aggregate = aggregateCalculatorHistory(history);
+      let highlight = null;
+      if (currentInput.length === 0) {
+        highlight = styles.highlightAggregate;
+      }
       return (
-        <Text style={styles.aggregate}>{aggregate} {OperationSymbols[operation]}</Text>
+        <Text style={[styles.aggregate, highlight]}>{aggregate} {currentInput.length > 0 ? OperationSymbols[operation] : ''}</Text>
       );
     }
   }
@@ -55,7 +59,10 @@ const styles = StyleSheet.create({
     color: '#a2dcf5',
     fontSize: 38,
     marginRight: 5
+  },
+  highlightAggregate: {
+    color: '#fff'
   }
-})
+});
 
 export default OutputScreen;

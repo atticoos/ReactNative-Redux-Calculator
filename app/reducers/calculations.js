@@ -19,13 +19,7 @@ const initialState = {
   positive: true,
   operation: null,
   currentInput: [],
-  history: [{
-    input: 10,
-    operation: 'ADD'
-  }, {
-    input: 10,
-    operation: 'ADD'
-  }]
+  history: []
 };
 
 export default function calculationReducer (state = initialState, action) {
@@ -55,6 +49,19 @@ export default function calculationReducer (state = initialState, action) {
       };
     case OPERATION_INPUT:
       // assign the current operation
+      if (history.length === 0 && currentInput.length > 0) {
+        history.push({
+          input: parseFloat(currentInput.join('')),
+          operation: action.operation
+        });
+        currentInput = [];
+        return {
+          ...state,
+          operation: action.operation,
+          currentInput,
+          history
+        };
+      }
       return {
         ...state,
         operation: action.operation
@@ -77,11 +84,7 @@ export default function calculationReducer (state = initialState, action) {
     case UNDO:
       var lastInput = history.pop();
       var positive = true;
-      currentInput = aggregateCalculatorHistory(history).toString().split('');
-      if (currentInput[0] === '-') {
-        currentInput.splice(0, 1);
-        positive = false;
-      }
+      currentInput = [];
       return {
         ...state,
         positive,
