@@ -19,7 +19,7 @@ class Calculator extends Component {
       <View style={styles.container}>
         <OutputScreen
           style={styles.outputScreen}
-          currentInput={calculations.currentInput} />
+          calculations={calculations} />
         <History
           style={styles.history} />
         <Inputs

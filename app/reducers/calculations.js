@@ -18,7 +18,13 @@ const initialState = {
   positive: true,
   lastOperation: null,
   currentInput: [],
-  history: []
+  history: [{
+    input: 10,
+    operation: 'add'
+  }, {
+    input: 10,
+    operation: 'add'
+  }]
 };
 
 export default function calculationReducer (state = initialState, action) {
