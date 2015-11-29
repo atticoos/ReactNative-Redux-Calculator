@@ -13,14 +13,15 @@ import Inputs from '../components/inputs';
 }))
 class Calculator extends Component {
   render() {
-    var {dispatch} = this.props;
+    var {dispatch, calculations} = this.props;
     var boundActionCreators = bindActionCreators(CalculatorActionCreators, dispatch);
     return (
       <View style={styles.container}>
         <OutputScreen
           style={styles.outputScreen}
-          value={12} />
-        <History style={styles.history} />
+          currentInput={calculations.currentInput} />
+        <History
+          style={styles.history} />
         <Inputs
           {...boundActionCreators}
           style={{flex: 1}} />

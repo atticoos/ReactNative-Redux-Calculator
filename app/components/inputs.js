@@ -39,6 +39,7 @@ class Inputs extends Component {
     )
   }
   renderInputRows() {
+    var {inputNumber} = this.props;
     return inputs.reduce((collection, input) => {
       if (collection[collection.length - 1].length === 3) {
         collection.push([]);
@@ -50,8 +51,9 @@ class Inputs extends Component {
         return (
           <TouchableHighlight
             key={'inputRow_' + rowIndex + '_inputCol_' + columnIndex}
+            underlayColor="#ededed"
             style={styles.input}
-            underlayColor="#ededed">
+            onPress={() => inputNumber(item.value)}>
             <Text style={styles.inputText}>{item.value}</Text>
           </TouchableHighlight>
         );

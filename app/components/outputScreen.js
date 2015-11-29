@@ -3,11 +3,18 @@
 import React, {Component, StyleSheet, View, Text} from 'react-native';
 
 class OutputScreen extends Component {
+  getOutput() {
+    var {currentInput} = this.props;
+    if (currentInput.length === 0) {
+      return 0;
+    } else {
+      return currentInput.join('');
+    }
+  }
   render() {
-    var value = this.props.value;
     return (
       <View style={[styles.view, this.props.style]}>
-        <Text style={styles.text}>{value}</Text>
+        <Text style={styles.text}>{this.getOutput()}</Text>
       </View>
     )
   }

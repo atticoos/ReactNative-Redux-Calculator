@@ -22,11 +22,13 @@ const initialState = {
 };
 
 export default function calculationReducer (state = initialState, action) {
+  var currentInput = state.currentInput.slice();
   switch(action.type) {
     case NUMBER_INPUT:
+      currentInput.push(action.value);
       return {
         ...state,
-        currentInput: state.currentInput.slice().push(action.value)
+        currentInput
       };
     case NUMBER_SIGNED_INPUT:
       return {
@@ -34,9 +36,14 @@ export default function calculationReducer (state = initialState, action) {
         positive: !state.positive
       };
     case DECIMAL_INPUT:
+      // only allow one decimal
+      if (state.currentInput.indexOf('.') > -1) {
+        return state;
+      }
+      currentInput.push('.');
       return {
         ...state,
-        currentInput: state.currentInput.slice().push('.')
+        currentInput
       };
     case OPERATION_INPUT:
       // calculate current input against value of last history item, then reset the integer sign
