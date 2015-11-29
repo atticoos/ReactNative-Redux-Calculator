@@ -1,7 +1,9 @@
 'use strict';
 
 import React, {Component, StyleSheet, View, Text} from 'react-native';
+import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux/native';
+import * as CalculatorActionCreators from '../actions/dispatchers';
 import OutputScreen from '../components/outputScreen';
 import History from '../components/history';
 import Inputs from '../components/inputs';
@@ -11,13 +13,17 @@ import Inputs from '../components/inputs';
 }))
 class Calculator extends Component {
   render() {
+    var {dispatch} = this.props;
+    var boundActionCreators = bindActionCreators(CalculatorActionCreators, dispatch);
     return (
       <View style={styles.container}>
         <OutputScreen
           style={styles.outputScreen}
           value={12} />
         <History style={styles.history} />
-        <Inputs style={{flex: 1}} />
+        <Inputs
+          {...boundActionCreators}
+          style={{flex: 1}} />
       </View>
     );
   }

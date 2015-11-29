@@ -30,7 +30,6 @@ var operations = [
 
 class Inputs extends Component {
   render() {
-
     return (
       <View style={this.props.style}>
         {this.renderInputRows()}
