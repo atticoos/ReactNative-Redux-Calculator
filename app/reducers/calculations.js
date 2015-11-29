@@ -58,13 +58,6 @@ export default function calculationReducer (state = initialState, action) {
         ...state,
         operation: action.operation
       };
-    case UNDO:
-      return {
-        ...state,
-        positive: true,
-        currentInput: [],
-        history: state.history.slice(0, state.history.length - 2)
-      };
     case CALCULATE:
       if (currentInput.length === 0) {
         // @TODO - apply the operation to the last item in the history to repeat the calculation
@@ -79,6 +72,20 @@ export default function calculationReducer (state = initialState, action) {
         ...state,
         history,
         currentInput
+      };
+    case UNDO:
+      var lastInput = history.pop();
+      var positive = true;
+      currentInput = lastInput.input.toString().split('');
+      if (currentInput[0] === '-') {
+        currentInput.splice(0, 1);
+        positive = false;
+      }
+      return {
+        ...state,
+        positive,
+        currentInput,
+        history
       };
     default:
       return state;
