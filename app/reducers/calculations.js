@@ -120,7 +120,8 @@ export default function calculationReducer (state = initialState, action) {
     case TIME_TRAVEL:
       return {
         ...state,
-        offset: action.index
+        // toggle the offset to the selected offset of, if already selected, remove it
+        offset: action.index === state.offset ? null : action.index
 
       }
     default:

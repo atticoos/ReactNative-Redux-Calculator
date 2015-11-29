@@ -36,7 +36,14 @@ class History extends Component {
   createPill(aggregation, input, operation, index) {
     var {timeTravel, calculations} = this.props;
     var offset = calculations.offset;
-    var offsetStyle = offset === null || index <= offset ? null : styles.pillOffset;
+    var offsetStyle;
+    if (offset === null) {
+      offsetStyle = null;
+    } else if (index > offset) {
+      offsetStyle = styles.pillOffset;
+    } else if (index === offset) {
+      offsetStyle = styles.currentPillOffset;
+    }
     return (
       <TouchableHighlight
         onPress={() => timeTravel(index)}
@@ -69,6 +76,9 @@ const styles = StyleSheet.create({
   },
   pillOffset: {
     backgroundColor: 'gray'
+  },
+  currentPillOffset: {
+    backgroundColor: 'green'
   },
   text: {
     color: '#fff',

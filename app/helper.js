@@ -6,7 +6,7 @@ import {OPERATION_ADD, OPERATION_SUBTRACT, OPERATION_DIVIDE, OPERATION_MULTIPLY}
  * Aggregates the final value of the calculator by the history of inputs
  */
 export function aggregateCalculatorHistory (calculations, offset = null, stepFunction = function(){}) {
-  let collection = calculations.slice(0, offset === null ? calculations.length : (offset + 1));
+  let collection = calculations.slice(0, offset === null ? calculations.length : (offset + 2));
   if (collection.length === 0) {
     return 0;
   } else if (collection.length === 1) {
