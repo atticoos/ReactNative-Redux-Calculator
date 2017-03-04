@@ -1,17 +1,15 @@
 'use strict';
 
-import React, {Component, StyleSheet, View, Text} from 'react-native';
+import React from 'react';
+import {StyleSheet, View, Text} from 'react-native';
 import {bindActionCreators} from 'redux';
-import {connect} from 'react-redux/native';
+import {connect} from 'react-redux';
 import * as CalculatorActionCreators from '../actions/dispatchers';
 import OutputScreen from '../components/outputScreen';
 import History from '../components/history';
 import Inputs from '../components/inputs';
 
-@connect(state => ({
-  calculations: state.calculations
-}))
-class Calculator extends Component {
+class Calculator extends React.Component {
   render() {
     var {dispatch, calculations} = this.props;
     var boundActionCreators = bindActionCreators(CalculatorActionCreators, dispatch);
@@ -51,4 +49,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Calculator;
+const selector = state => ({
+  calculations: state.calculations
+})
+export default connect(selector)(Calculator);

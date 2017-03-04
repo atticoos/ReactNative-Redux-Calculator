@@ -1,15 +1,15 @@
 'use strict';
 
-import React, {Component, Navigator} from 'react-native';
-import {Provider} from 'react-redux/native';
+import React from 'react';
+import {Provider} from 'react-redux';
 import store from '../store';
 import Calculator from './Calculator';
 
-export default class App extends Component {
+export default class App extends React.Component {
   render() {
     return (
       <Provider store={store}>
-      {() => <Calculator />}
+        <Calculator />
       </Provider>
     );
   }

@@ -1,12 +1,13 @@
 'use strict';
 
-import React, {Component, StyleSheet, ScrollView, TouchableHighlight, View, Text} from 'react-native';
+import React from 'react';
+import {StyleSheet, ScrollView, TouchableHighlight, View, Text} from 'react-native';
 import {OPERATION_ADD, OPERATION_SUBTRACT, OPERATION_DIVIDE, OPERATION_MULTIPLY} from '../actions/types';
 import {aggregateCalculatorHistory} from '../helper';
 import OperationSymbols from '../constants/operationSymbols';
 import Colors from '../colors';
 
-class History extends Component {
+class History extends React.Component {
   render() {
     return (
       <View style={[this.props.style]}>
@@ -39,8 +40,10 @@ class History extends Component {
     } else if (index === offset) {
       offsetStyle = {backgroundColor: Colors[operation].darker};
     }
+
     return (
       <TouchableHighlight
+        key={index}
         underlayColor={Colors[operation].darker}
         onPress={() => timeTravel(index)}
         style={[styles.pill, styles[operation], styles.inversion, offsetStyle]}>

@@ -1,12 +1,13 @@
 'use strict';
 
-import React, {Component, StyleSheet, View, Text} from 'react-native';
+import React from 'react';
+import {StyleSheet, View, Text} from 'react-native';
 import {OPERATION_ADD, OPERATION_SUBTRACT, OPERATION_DIVIDE, OPERATION_MULTIPLY} from '../actions/types';
 import OperationSymbols from '../constants/operationSymbols';
 import Colors from '../colors';
 import {aggregateCalculatorHistory} from '../helper';
 
-class OutputScreen extends Component {
+class OutputScreen extends React.Component {
   getOutput() {
     var {currentInput, history} = this.props.calculations;
     if (currentInput.length === 0 && history.length === 0) {

@@ -1,6 +1,7 @@
 'use strict';
 
-import React, {TouchableHighlight, Component, StyleSheet, View, Text} from 'react-native';
+import React from 'react';
+import {TouchableHighlight, StyleSheet, View, Text} from 'react-native';
 import {OPERATION_ADD, OPERATION_SUBTRACT, OPERATION_DIVIDE, OPERATION_MULTIPLY} from '../actions/types';
 
 var Types = {
@@ -30,7 +31,7 @@ var operations = [
   {value: 'x', color: '#6fcdf4', altColor: '#65badd', operation: OPERATION_MULTIPLY}
 ];
 
-class Inputs extends Component {
+class Inputs extends React.Component {
   render() {
     return (
       <View style={this.props.style}>
